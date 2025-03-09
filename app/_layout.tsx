@@ -10,6 +10,7 @@ import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import "react-native-reanimated";
+import Container from "toastify-react-native";
 
 import { useColorScheme } from "@/components/useColorScheme";
 
@@ -44,6 +45,7 @@ export default function RootLayout() {
         <Stack.Screen name="(root)" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
       </Stack>
+      <Container position="top" style={{ width: "100%" }} />
     </ThemeProvider>
   );
 }

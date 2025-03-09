@@ -57,7 +57,7 @@ export default function Welcome() {
         title={isLastSlide ? "Get Started" : "Next"}
         onPress={() =>
           isLastSlide
-            ? router.replace("/(auth)/sign-in")
+            ? router.replace("/(auth)/verify-email")
             : swiperRef.current?.scrollBy(1)
         }
         className="w-11/12 mt-10 mb-5"

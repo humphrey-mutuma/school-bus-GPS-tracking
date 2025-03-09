@@ -1,4 +1,4 @@
-// app/(auth)/signIn.js
+// app/(auth)/Register.js
 import React, { useState } from "react";
 import {
   View,
@@ -8,47 +8,45 @@ import {
   ScrollView,
 } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
+import { RegisterDto } from "@/services/auth/dto/auth.dto";
 import authService from "@/services/auth/auth.service";
-import { Roles } from "@/enums";
 import { Toast } from "toastify-react-native";
-import useAuthStore from "@/stores/auth-store";
-import { SessionUser } from "@/types";
 
-export default function SignIn() {
+export default function Register() {
   const { email: paramsEmail } = useLocalSearchParams();
-  const { setUserData } = useAuthStore();
-  const [isLoading, setIsLoading] = useState(false);
-  const [email, setEmail] = useState<string>(paramsEmail?.toString());
-  const [password, setPassword] = useState("");
-  const [role, setRole] = useState<string>("PARENT"); // Default role
 
+  const [isLoading, setIsLoading] = useState(false);
+  const [email, setEmail] = useState(paramsEmail?.toString());
+  const [password, setPassword] = useState("");
+  const [fullName, setFullName] = useState("");
   const router = useRouter();
 
-  const handleSignIn = async () => {
-    if (!email) {
+  const handleRegister = async () => {
+    if (!email || !password || !fullName) {
       alert("Please fill in all required fields");
       return;
     }
 
+    const payload: RegisterDto = {
+      email,
+      password,
+      role: "ADMIN",
+      name: fullName,
+    };
+
     try {
       setIsLoading(true);
 
-      const payload = {
-        email,
-        password,
-      };
+      const new_admin = await authService.register(payload);
+      if (new_admin) {
+        Toast.success("Successfully registered, please login");
 
-      const logInUser = await authService.login(payload);
-      if (logInUser) {
-        const data: SessionUser = {
-          id: logInUser.data.id,
-          name: logInUser.data.name,
-          email: logInUser.data.email,
-          role: logInUser.data.role,
-        };
-        setUserData(data);
-        Toast.success(logInUser.message);
-        router.replace("/(root)/(tabs)/home");
+        router.push({
+          pathname: "/(auth)/sign-in", // Target screen route
+          params: {
+            email,
+          },
+        });
       }
     } catch (error) {
       console.error(error);
@@ -61,39 +59,45 @@ export default function SignIn() {
     <ScrollView className="flex-1 bg-gray-100 p-4">
       <View className="justify-center items-center">
         <Text className="text-2xl font-bold text-gray-800 mb-6 mt-4">
-          Get Started with Bus Tracker
+          Create Account
         </Text>
 
         <View className="w-full max-w-sm">
+          {/* Full Name */}
+          <TextInput
+            className="w-full p-3 mb-4 bg-white border border-gray-300 rounded-lg text-gray-700"
+            placeholder="Full Name"
+            value={fullName}
+            onChangeText={setFullName}
+          />
           {/* email */}
           <TextInput
-            className="w-full outline-0  p-3 mb-4 bg-white border border-gray-300 rounded-lg text-gray-700"
-            placeholder="Email"
+            className="w-full outline-0 p-3 mb-4 bg-white border border-gray-300 rounded-lg text-gray-700"
+            placeholder="email"
             value={email}
             // onChangeText={setEmail}
             autoCapitalize="none"
             editable={false}
           />
-
+          {/* Password */}
           <TextInput
             className="w-full p-3 mb-4 bg-white border border-gray-300 rounded-lg text-gray-700"
             placeholder="Password"
             value={password}
             onChangeText={setPassword}
+            secureTextEntry
             autoCapitalize="none"
           />
-
-          {/* Conditional Fields Based on Role */}
 
           {/* Sign Up Button */}
           <TouchableOpacity
             disabled={isLoading}
             className="w-full p-3 bg-blue-500 rounded-lg mb-4"
-            onPress={handleSignIn}
+            onPress={handleRegister}
             activeOpacity={0.7}
           >
             <Text className="text-white text-center font-semibold text-lg">
-              Sign In
+              {isLoading ? "Saving..." : "  Sign Up"}
             </Text>
           </TouchableOpacity>
         </View>
