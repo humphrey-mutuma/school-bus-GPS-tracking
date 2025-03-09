@@ -1,4 +1,4 @@
- import { axiosInstance, axiosInstanceInsecure } from "@/lib/axios-instance";
+import { axiosInstance } from "@/lib/axios-instance";
 import { ApiResponse } from "@/types/ApiResponse";
 import { handleAxiosError } from "@/utils/errorhandler";
 import { CreateParentDto, ParentResDto } from "./dto/parent.dto";
@@ -15,10 +15,7 @@ class ParentsService {
     createParentDto: CreateParentDto
   ): Promise<ApiResponse<string>> {
     try {
-      const res = await axiosInstanceInsecure.post(
-        this.baseUrl(``),
-        createParentDto
-      );
+      const res = await axiosInstance.post(this.baseUrl(``), createParentDto);
 
       if (res.status == 201) {
         return res.data;
@@ -32,7 +29,7 @@ class ParentsService {
 
   async findParent(id: string): Promise<ApiResponse<ParentResDto>> {
     try {
-      const res = await axiosInstanceInsecure.get(this.baseUrl(`/${id}`));
+      const res = await axiosInstance.get(this.baseUrl(`/${id}`));
 
       if (res.status == 200) {
         return res.data;
@@ -47,7 +44,7 @@ class ParentsService {
   // reset a user email
   async findParents(): Promise<ApiResponse<ParentResDto[]>> {
     try {
-      const res = await axiosInstanceInsecure.get(this.baseUrl(``));
+      const res = await axiosInstance.get(this.baseUrl(``));
 
       if (res.status == 200) {
         return res.data;

@@ -105,6 +105,7 @@ const useAuthStore = create<AuthState>()(
               email: data.email,
               name: data.name,
               role: data.role,
+              school: data.school,
             });
 
             alert(message);
@@ -177,12 +178,8 @@ const useAuthStore = create<AuthState>()(
     }),
     {
       name: "auth-store",
-      // getStorage: () => localStorage,
-      // serialize: (state) => encryptToken(state),
-      // deserialize: (state) => decryptToken(state),
       partialize: (state) => ({
         accessToken: state.accessToken,
-        // refToken: state.refToken,
         userData: state.userData,
       }), // Only persist accessToken & userData
       storage: createJSONStorage(() => sessionStorage), // Use sessionStorage

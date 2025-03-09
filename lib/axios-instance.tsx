@@ -11,23 +11,30 @@ export const axiosInstance = axios.create({
   baseURL: APIS_BASE_URL,
 });
 
+// Request interceptor to attach Bearer token
 axiosInstance.interceptors.request.use(
-  async (config) => {
-    const { setAccessToken, setRefToken, accessToken, refToken, logOut } =
-      useAuthStore.getState();
+  (config) => {
+    const { accessToken, userData } = useAuthStore.getState(); // Access Zustand state directly
+    console.log("dsafdss", userData, accessToken);
 
-    if (!accessToken || !refToken) {
-      logOut();
-      window.location.href = "/verify-password";
-      return Promise.reject(new Error("Refresh token expired"));
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
     }
-
-    config.headers.Authorization = `Bearer ${accessToken}`;
 
     return config;
   },
+  (error) => Promise.reject(error)
+);
+
+// Response interceptor (optional) for handling errors
+axiosInstance.interceptors.response.use(
+  (response) => response,
   (error) => {
-    console.error("Request error:", error);
+    if (error.response?.status === 401) {
+      // Token expired or invalid, clear user and redirect
+      useAuthStore.getState().logOut();
+      // Note: Can't use router here directly, handle in component
+    }
     return Promise.reject(error);
   }
 );

@@ -15,6 +15,9 @@ export interface RegisterDto {
   password: string;
   phoneNumber?: string;
   role: string;
+
+  schoolName: string;
+  schoolAddress: string;
 }
 
 export interface LoginResDto {
@@ -24,6 +27,8 @@ export interface LoginResDto {
   name: string;
   email: string;
   role: Roles;
+
+  school: { id: string; name: string; address: string } | null;
 }
 
 export interface RefreshAccessTokenResDto {

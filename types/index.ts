@@ -6,4 +6,5 @@ export interface SessionUser {
   name: string;
   email: string;
   role: Roles;
+  school: { id: string; name: string; address: string } | null;
 }

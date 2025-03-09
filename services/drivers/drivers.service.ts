@@ -1,5 +1,5 @@
 import { CreateDriverDto, DriverResDto } from "./dto/driver.dto";
-import { axiosInstance, axiosInstanceInsecure } from "@/lib/axios-instance";
+import { axiosInstance } from "@/lib/axios-instance";
 import { ApiResponse } from "@/types/ApiResponse";
 import { handleAxiosError } from "@/utils/errorhandler";
 
@@ -15,10 +15,7 @@ class DriversService {
     createDriverDto: CreateDriverDto
   ): Promise<ApiResponse<string>> {
     try {
-      const res = await axiosInstanceInsecure.post(
-        this.baseUrl(``),
-        createDriverDto
-      );
+      const res = await axiosInstance.post(this.baseUrl(``), createDriverDto);
 
       if (res.status == 201) {
         return res.data;
@@ -32,7 +29,7 @@ class DriversService {
 
   async findDriver(id: string): Promise<ApiResponse<DriverResDto>> {
     try {
-      const res = await axiosInstanceInsecure.get(this.baseUrl(`/${id}`));
+      const res = await axiosInstance.get(this.baseUrl(`/${id}`));
 
       if (res.status == 200) {
         return res.data;
@@ -47,7 +44,7 @@ class DriversService {
   // reset a user email
   async findDrivers(): Promise<ApiResponse<DriverResDto[]>> {
     try {
-      const res = await axiosInstanceInsecure.get(this.baseUrl(``));
+      const res = await axiosInstance.get(this.baseUrl(``));
 
       if (res.status == 200) {
         return res.data;
@@ -60,7 +57,7 @@ class DriversService {
   }
 
   // log a user out
-   async deleteDriver(id: string): Promise<ApiResponse<string>> {
+  async deleteDriver(id: string): Promise<ApiResponse<string>> {
     //  protected route
     if (!id) {
       throw new Error(`Not Authorized!`);

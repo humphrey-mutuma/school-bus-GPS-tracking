@@ -139,7 +139,7 @@ export default function VerifyEmail() {
             activeOpacity={0.7}
           >
             <Text className="text-white text-center font-semibold text-lg">
-              {isLoading ? "Checking..." : "Join"}
+              {isLoading ? "Verifying..." : "Join"}
             </Text>
           </TouchableOpacity>
         </View>

@@ -1,4 +1,4 @@
-import { axiosInstance, axiosInstanceInsecure } from "@/lib/axios-instance";
+import { axiosInstance } from "@/lib/axios-instance";
 import { ApiResponse } from "@/types/ApiResponse";
 import { handleAxiosError } from "@/utils/errorhandler";
 import { CreateStudentDto, FindStudentDto } from "./dto/student.dto";
@@ -15,10 +15,7 @@ class StudentsService {
     createStudentDto: CreateStudentDto
   ): Promise<ApiResponse<string>> {
     try {
-      const res = await axiosInstanceInsecure.post(
-        this.baseUrl(``),
-        createStudentDto
-      );
+      const res = await axiosInstance.post(this.baseUrl(``), createStudentDto);
 
       if (res.status == 201) {
         return res.data;
@@ -32,7 +29,7 @@ class StudentsService {
 
   async findStudent(id: string): Promise<ApiResponse<FindStudentDto>> {
     try {
-      const res = await axiosInstanceInsecure.get(this.baseUrl(`/${id}`));
+      const res = await axiosInstance.get(this.baseUrl(`/${id}`));
 
       if (res.status == 200) {
         return res.data;
@@ -47,7 +44,7 @@ class StudentsService {
   // reset a user email
   async findStudents(): Promise<ApiResponse<FindStudentDto[]>> {
     try {
-      const res = await axiosInstanceInsecure.get(this.baseUrl(``));
+      const res = await axiosInstance.get(this.baseUrl(``));
 
       if (res.status == 200) {
         return res.data;

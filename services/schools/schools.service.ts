@@ -1,8 +1,8 @@
-import { axiosInstance, axiosInstanceInsecure } from "@/lib/axios-instance";
+import { axiosInstance } from "@/lib/axios-instance";
 import { ApiResponse } from "@/types/ApiResponse";
 import { handleAxiosError } from "@/utils/errorhandler";
 import { CreateSchoolDto, SchoolResDto } from "./dto/school.dto";
- 
+
 class SchoolsService {
   // Helper method to create full URLs
   private baseUrl(endpoint: string): string {
@@ -15,10 +15,7 @@ class SchoolsService {
     createSchoolDto: CreateSchoolDto
   ): Promise<ApiResponse<string>> {
     try {
-      const res = await axiosInstanceInsecure.post(
-        this.baseUrl(``),
-        createSchoolDto
-      );
+      const res = await axiosInstance.post(this.baseUrl(``), createSchoolDto);
 
       if (res.status == 201) {
         return res.data;
@@ -32,7 +29,7 @@ class SchoolsService {
 
   async findSchool(id: string): Promise<ApiResponse<SchoolResDto>> {
     try {
-      const res = await axiosInstanceInsecure.get(this.baseUrl(`/${id}`));
+      const res = await axiosInstance.get(this.baseUrl(`/${id}`));
 
       if (res.status == 200) {
         return res.data;
@@ -47,7 +44,7 @@ class SchoolsService {
   // reset a user email
   async findSchools(): Promise<ApiResponse<SchoolResDto[]>> {
     try {
-      const res = await axiosInstanceInsecure.get(this.baseUrl(``));
+      const res = await axiosInstance.get(this.baseUrl(``));
 
       if (res.status == 200) {
         return res.data;

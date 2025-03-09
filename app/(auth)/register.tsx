@@ -18,6 +18,8 @@ export default function Register() {
   const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState(paramsEmail?.toString());
   const [password, setPassword] = useState("");
+  const [schoolAddress, setSchoolAddress] = useState("");
+  const [schoolName, setSchoolName] = useState("");
   const [fullName, setFullName] = useState("");
   const router = useRouter();
 
@@ -32,6 +34,8 @@ export default function Register() {
       password,
       role: "ADMIN",
       name: fullName,
+      schoolName,
+      schoolAddress,
     };
 
     try {
@@ -65,14 +69,14 @@ export default function Register() {
         <View className="w-full max-w-sm">
           {/* Full Name */}
           <TextInput
-            className="w-full p-3 mb-4 bg-white border border-gray-300 rounded-lg text-gray-700"
+            className="w-full p-3 mb-4 bg-white border border-gray-300 rounded-sm text-gray-700"
             placeholder="Full Name"
             value={fullName}
             onChangeText={setFullName}
           />
           {/* email */}
           <TextInput
-            className="w-full outline-0 p-3 mb-4 bg-white border border-gray-300 rounded-lg text-gray-700"
+            className="w-full outline-0 p-3 mb-4 bg-white border border-gray-300 rounded-sm text-gray-700"
             placeholder="email"
             value={email}
             // onChangeText={setEmail}
@@ -81,18 +85,34 @@ export default function Register() {
           />
           {/* Password */}
           <TextInput
-            className="w-full p-3 mb-4 bg-white border border-gray-300 rounded-lg text-gray-700"
+            className="w-full p-3 mb-4 bg-white border border-gray-300 rounded-sm text-gray-700"
             placeholder="Password"
             value={password}
             onChangeText={setPassword}
             secureTextEntry
             autoCapitalize="none"
           />
-
+          <View className="my-1 outline-1"></View>
+          {/* School Name Input */}
+          <TextInput
+            className="w-full p-3 mb-4 bg-gray-50 border border-gray-300 rounded-sm text-gray-700"
+            placeholder="Enter school name"
+            value={schoolName}
+            onChangeText={setSchoolName}
+            autoCapitalize="words"
+          />
+          {/* Address Input */}
+          <TextInput
+            className="w-full p-3 mb-4 bg-gray-50 border border-gray-300 rounded-sm text-gray-700"
+            placeholder="Enter school address"
+            value={schoolAddress}
+            onChangeText={setSchoolAddress}
+            autoCapitalize="words"
+          />
           {/* Sign Up Button */}
           <TouchableOpacity
             disabled={isLoading}
-            className="w-full p-3 bg-blue-500 rounded-lg mb-4"
+            className="w-full p-3 bg-blue-500 rounded-sm mb-4"
             onPress={handleRegister}
             activeOpacity={0.7}
           >

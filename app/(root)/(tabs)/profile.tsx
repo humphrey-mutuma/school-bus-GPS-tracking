@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import useAuthStore from "@/stores/auth-store";
 import { Roles } from "@/enums";
 import schoolsService from "@/services/schools/schools.service";
-
+import { Button, Divider } from "react-native-paper";
 export default function ProfileScreen() {
   const { userData, logOut } = useAuthStore();
   const [schoolName, setSchoolName] = useState<string | null>(null);
@@ -45,14 +45,14 @@ export default function ProfileScreen() {
   }
 
   return (
-    <View className="flex-1 bg-gray-100 p-6">
+    <View className="flex-1 bg-gray-100 p-5">
       {/* Header */}
       <Text className="text-3xl font-bold text-gray-800 mb-8 text-center">
         Profile
       </Text>
 
       {/* User Info Card */}
-      <View className="bg-white rounded-xl   p-6 mb-6">
+      <View className="bg-white rounded-xl   p-3 mb-6">
         <View className="flex-row items-center mb-4">
           <Text className="text-lg font-semibold text-gray-700 w-24">
             Name:
@@ -76,28 +76,17 @@ export default function ProfileScreen() {
           <Text className="text-lg text-gray-900 flex-1">{userData?.role}</Text>
         </View>
 
-        {/* Admin-specific School Info */}
-        {userData?.role === Roles.ADMIN && (
-          <View className="flex-row items-center mt-4">
-            <Text className="text-lg font-semibold text-gray-700 w-24">
-              School:
-            </Text>
-            <Text className="text-lg text-gray-900 flex-1">
-              {schoolName || "Loading..."}
-            </Text>
-          </View>
-        )}
+        <Divider style={{ marginVertical: 15 }} />
+        {/* Logout Button */}
+        <Button
+          // className="bg-red-500 py-2 rounded-lg active:bg-red-600"
+          onPress={handleLogout}
+          // icon=""
+          mode="outlined"
+        >
+          Logout{" "}
+        </Button>
       </View>
-
-      {/* Logout Button */}
-      <Pressable
-        className="bg-red-500 py-3 rounded-lg active:bg-red-600"
-        onPress={handleLogout}
-      >
-        <Text className="text-white text-center font-semibold text-lg">
-          Logout
-        </Text>
-      </Pressable>
     </View>
   );
 }

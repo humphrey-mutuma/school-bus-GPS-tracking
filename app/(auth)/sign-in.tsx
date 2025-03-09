@@ -16,7 +16,7 @@ import { SessionUser } from "@/types";
 
 export default function SignIn() {
   const { email: paramsEmail } = useLocalSearchParams();
-  const { setUserData } = useAuthStore();
+  const { setUserData, setAccessToken } = useAuthStore();
   const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState<string>(paramsEmail?.toString());
   const [password, setPassword] = useState("");
@@ -45,8 +45,10 @@ export default function SignIn() {
           name: logInUser.data.name,
           email: logInUser.data.email,
           role: logInUser.data.role,
+          school: logInUser.data.school,
         };
         setUserData(data);
+        setAccessToken(logInUser.data.accessToken);
         Toast.success(logInUser.message);
         router.replace("/(root)/(tabs)/home");
       }
@@ -81,6 +83,7 @@ export default function SignIn() {
             value={password}
             onChangeText={setPassword}
             autoCapitalize="none"
+            secureTextEntry
           />
 
           {/* Conditional Fields Based on Role */}
@@ -93,7 +96,7 @@ export default function SignIn() {
             activeOpacity={0.7}
           >
             <Text className="text-white text-center font-semibold text-lg">
-              Sign In
+              {isLoading ? "Loading..." : " Sign In"}
             </Text>
           </TouchableOpacity>
         </View>

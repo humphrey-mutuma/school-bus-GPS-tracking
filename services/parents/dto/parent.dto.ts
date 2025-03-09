@@ -3,7 +3,7 @@ export interface CreateParentDto {
   name: string;
   phoneNumber: string;
 
-  students: string[];
+  students?: string[];
 }
 
 export interface ParentResDto {
