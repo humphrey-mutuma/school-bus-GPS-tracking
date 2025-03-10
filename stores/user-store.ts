@@ -1,25 +1,33 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
 import { handleAxiosError } from "@/utils/errorhandler";
-import { Alert } from "react-native";
+import parentsService from "@/services/parents/parents.service";
+import { ParentResDto } from "@/services/parents/dto/parent.dto";
+import { DriverResDto } from "@/services/drivers/dto/driver.dto";
+import { FindStudentDto } from "@/services/students/dto/student.dto";
+import driversService from "@/services/drivers/drivers.service";
+import studentsService from "@/services/students/students.service";
 
 // types.ts
 interface UserState {
-  userBookmarks: string[];
-  setUserBookmarks: (bookmarks: string[]) => void;
-  bookmarkRental: (rentalId: string, userId: string) => Promise<void>;
-  isBookmarked: (rentalId: string) => boolean;
-  clearBookmarks: (userId: string) => Promise<void>;
+  fetchParents: () => Promise<void>;
+  fetchDrivers: () => Promise<void>;
+  fetchStudents: () => Promise<void>;
+  isFetching: boolean;
+  parents: ParentResDto[];
+  drivers: DriverResDto[];
+  students: FindStudentDto[];
 }
 
 const initialState: UserState = {
-  userBookmarks: [],
+  isFetching: false,
+  parents: [],
+  drivers: [],
+  students: [],
 
   // Placeholder, will be overridden in store creation
-  setUserBookmarks: () => {},
-  bookmarkRental: async () => {},
-  isBookmarked: () => false,
-  clearBookmarks: async () => {},
+  fetchParents: async () => {},
+  fetchDrivers: async () => {},
+  fetchStudents: async () => {},
 };
 
 const useUserStore = create<UserState>()(
@@ -28,42 +36,40 @@ const useUserStore = create<UserState>()(
     ...initialState,
 
     // .ACTIONS*****************************************
-    setUserBookmarks: (bookmarks: string[]) =>
-      set({ userBookmarks: bookmarks }),
 
     // methods *************************************************
 
-    // bookmark a rental
-    bookmarkRental: async (rentalId: string, userId: string) => {
-      const { userBookmarks } = get();
-      const isBookmarked = userBookmarks?.includes(rentalId);
-
-      // Optimistically update state
-      const updatedBookmarks = isBookmarked
-        ? userBookmarks.filter((id) => id !== rentalId)
-        : [...userBookmarks, rentalId];
-
-      set({ userBookmarks: updatedBookmarks });
-
+    // fetch parents ****
+    fetchParents: async () => {
       try {
-        const res = [{ message: "" }];
+        const res = await parentsService.findParents();
         // Revert state if server update fails
-        set({ userBookmarks });
+        set({ parents: res.data });
       } catch (error) {
+        handleAxiosError(error);
+      } finally {
+      }
+    }, // fetch parents ****
+    fetchDrivers: async () => {
+      try {
+        const res = await driversService.findDrivers();
         // Revert state if server update fails
-        set({ userBookmarks });
+        set({ drivers: res.data });
+      } catch (error) {
+        handleAxiosError(error);
+      } finally {
+      }
+    }, // fetch parents ****
+    fetchStudents: async () => {
+      try {
+        const res = await studentsService.findStudents();
+        // Revert state if server update fails
+        set({ students: res.data });
+      } catch (error) {
         handleAxiosError(error);
       } finally {
       }
     },
-
-    // check if a rental is bookmarked already
-    isBookmarked: (rentalId: string) => {
-      const { userBookmarks } = get();
-      return userBookmarks?.includes(rentalId);
-    },
-  
-    //
   })
   // {
   //   name: "users-store",

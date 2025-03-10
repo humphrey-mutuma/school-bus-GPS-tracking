@@ -1,33 +1,10 @@
 import * as React from "react";
 import { DataTable, Text } from "react-native-paper";
 import { View } from "./Themed";
-import { DriverResDto } from "@/services/drivers/dto/driver.dto";
+import useUserStore from "@/stores/user-store";
 
 const DriversTable = () => {
-  const [items] = React.useState<DriverResDto[]>([
-    {
-      id: "ds",
-      email: "john.doe@example.com",
-      name: "John Doe",
-      phoneNumber: "+1-555-4567",
-      carNumberPlate: "ABC123",
-    },
-    {
-      id: "ds532",
-
-      email: "mary.smith@example.com",
-      name: "Mary Smith",
-      phoneNumber: "+125-234-5678",
-      carNumberPlate: "XYZ789",
-    },
-    {
-      id: "d2s",
-      email: "peter.jones@example.com",
-      name: "Peter Jones",
-      phoneNumber: "+1-664-6789",
-      carNumberPlate: "DEF456",
-    },
-  ]);
+  const { drivers } = useUserStore();
 
   return (
     <View style={{ marginTop: 12, marginBottom: 30 }}>
@@ -42,7 +19,7 @@ const DriversTable = () => {
           <DataTable.Title>Phone</DataTable.Title>
         </DataTable.Header>
 
-        {items.slice().map((item) => (
+        {drivers?.slice().map((item) => (
           <DataTable.Row key={item.id}>
             <DataTable.Cell>{item.name}</DataTable.Cell>
             <DataTable.Cell>{item.carNumberPlate}</DataTable.Cell>

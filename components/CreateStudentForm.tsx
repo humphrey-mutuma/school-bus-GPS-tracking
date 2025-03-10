@@ -6,16 +6,19 @@ import { Toast } from "toastify-react-native";
 import studentsService from "@/services/students/students.service";
 import { ScrollView, Modal } from "react-native";
 import { Button, Text, TextInput } from "react-native-paper";
+import useUserStore from "@/stores/user-store";
 
 export default function CreateStudentForm({ visible, setVisible }: any) {
   const { userData } = useAuthStore();
+  const { fetchStudents } = useUserStore();
+
   const [parentEmail, setParentEmail] = useState("");
   const [name, setName] = useState("");
   const [parentName, setParentName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleCreateSchool = async () => {
+  const handleCreateStudent = async () => {
     if (!name || !parentEmail) {
       Toast.error("Please fill in all fields");
       return;
@@ -35,6 +38,7 @@ export default function CreateStudentForm({ visible, setVisible }: any) {
         setParentEmail("");
         setPhoneNumber("");
         setVisible(false);
+        fetchStudents();
       }
     } catch (error) {
       Alert.alert("Error");
@@ -130,7 +134,7 @@ export default function CreateStudentForm({ visible, setVisible }: any) {
                     {/* Create Student Button */}
                     <Button
                       style={{}}
-                      onPress={handleCreateSchool}
+                      onPress={handleCreateStudent}
                       disabled={loading}
                       mode="contained"
                     >

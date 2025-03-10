@@ -24,7 +24,7 @@ export default function Welcome() {
     >
       <TouchableOpacity
         onPress={() => {
-          router.replace("/(auth)/verify-email");
+          router.replace("/(root)/(tabs)/home");
         }}
         style={{
           width: "100%",

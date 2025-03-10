@@ -4,6 +4,7 @@ import { useState } from "react";
 import driversService from "@/services/drivers/drivers.service";
 import { Toast } from "toastify-react-native";
 import { Button, Text, TextInput } from "react-native-paper";
+import useUserStore from "@/stores/user-store";
 
 export default function CreateDriverScreen({ visible, setVisible }: any) {
   const [email, setEmail] = useState("");
@@ -11,6 +12,7 @@ export default function CreateDriverScreen({ visible, setVisible }: any) {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [carNumberPlate, setCarNumberPlate] = useState("");
   const [loading, setLoading] = useState(false);
+  const { fetchDrivers } = useUserStore();
 
   const handleCreateDriver = async () => {
     if (!email || !phoneNumber || !carNumberPlate) {
@@ -28,12 +30,13 @@ export default function CreateDriverScreen({ visible, setVisible }: any) {
       });
 
       if (response) {
-        Alert.alert(response.message);
+        Toast.success(response.message);
         setEmail("");
         setName("");
         setPhoneNumber("");
         setCarNumberPlate("");
         setVisible(false);
+        fetchDrivers();
       }
     } catch (error) {
       Alert.alert("Error");
