@@ -12,7 +12,7 @@ import { ApiResponse } from "@/types/ApiResponse";
 export class UserService {
   // Helper method to create full URLs
   private baseUrl(endpoint: string): string {
-    return `/api/users${endpoint}`;
+    return `users${endpoint}`;
   }
 
   // fetch user profile ***********************

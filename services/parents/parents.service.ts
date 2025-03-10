@@ -6,7 +6,7 @@ import { CreateParentDto, ParentResDto } from "./dto/parent.dto";
 class ParentsService {
   // Helper method to create full URLs
   private baseUrl(endpoint: string): string {
-    return `/api/parents${endpoint}`;
+    return `parents${endpoint}`;
   }
 
   // authenticate user ***************************************************

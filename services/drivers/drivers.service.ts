@@ -6,7 +6,7 @@ import { handleAxiosError } from "@/utils/errorhandler";
 class DriversService {
   // Helper method to create full URLs
   private baseUrl(endpoint: string): string {
-    return `/api/drivers${endpoint}`;
+    return `drivers${endpoint}`;
   }
 
   // authenticate user ***************************************************

@@ -44,20 +44,16 @@ export default function AdminScreen() {
             <Text className="  text-gray-600 flex-1">
               {userData?.name || "Not provided"}
             </Text>
-          </View>{" "}
+          </View>
           <View className="flex-row items-center">
             <Text className="text-base font-semibold   mr-2">Email:</Text>
-            <Text className="  text-gray-600 flex-1">
-              {userData?.email}
-            </Text>
+            <Text className="  text-gray-600 flex-1">{userData?.email}</Text>
           </View>
           {/*  */}
           <View className="flex-row items-center">
             <Text className="text-base font-semibold   mr-2">Role:</Text>
-            <Text className="  text-gray-600 flex-1">
-              {userData?.role}
-            </Text>
-          </View>{" "}
+            <Text className="  text-gray-600 flex-1">{userData?.role}</Text>
+          </View>
           {/*  */}
           <View className="flex-row items-center">
             <Text className="text-base font-semibold   mr-2">School:</Text>
@@ -78,7 +74,7 @@ export default function AdminScreen() {
               onPress={() => setCreateStudent(true)}
             >
               Create Student
-            </Button>{" "}
+            </Button>
             <Button
               icon="pencil"
               mode="outlined"

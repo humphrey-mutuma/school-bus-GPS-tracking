@@ -84,7 +84,7 @@ export default function ProfileScreen() {
           // icon=""
           mode="outlined"
         >
-          Logout{" "}
+          Logout
         </Button>
       </View>
     </View>

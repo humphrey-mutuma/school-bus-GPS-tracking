@@ -13,7 +13,7 @@ import { Toast } from "toastify-react-native";
 class AuthService {
   // Helper method to create full URLs
   private baseUrl(endpoint: string): string {
-    return `/api/auth${endpoint}`;
+    return `auth${endpoint}`;
   }
 
   // authenticate user ***************************************************

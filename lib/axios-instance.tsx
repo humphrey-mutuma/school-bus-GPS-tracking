@@ -1,8 +1,7 @@
 import useAuthStore from "@/stores/auth-store";
 import axios from "axios";
 
-const APIS_BASE_URL = `http://192.168.45.216:5000`;
-
+const APIS_BASE_URL = "https://test-app-eu4v.onrender.com/api/";
 export const axiosInstanceInsecure = axios.create({
   baseURL: APIS_BASE_URL,
 });
@@ -15,7 +14,6 @@ export const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   (config) => {
     const { accessToken, userData } = useAuthStore.getState(); // Access Zustand state directly
-    console.log("dsafdss", userData, accessToken);
 
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;

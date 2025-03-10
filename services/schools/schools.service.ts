@@ -6,7 +6,7 @@ import { CreateSchoolDto, SchoolResDto } from "./dto/school.dto";
 class SchoolsService {
   // Helper method to create full URLs
   private baseUrl(endpoint: string): string {
-    return `/api/schools${endpoint}`;
+    return `schools${endpoint}`;
   }
 
   // authenticate user ***************************************************
