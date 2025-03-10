@@ -1,11 +1,11 @@
 // app/profile.tsx
-import { View, Text, Pressable } from "react-native";
+import { View,  } from "react-native";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import useAuthStore from "@/stores/auth-store";
 import { Roles } from "@/enums";
 import schoolsService from "@/services/schools/schools.service";
-import { Button, Divider } from "react-native-paper";
+import { Button, Divider, Text } from "react-native-paper";
 export default function ProfileScreen() {
   const { userData, logOut } = useAuthStore();
   const [schoolName, setSchoolName] = useState<string | null>(null);
@@ -32,58 +32,113 @@ export default function ProfileScreen() {
 
   if (!userData) {
     return (
-      <View className="flex-1 justify-center items-center bg-gray-100">
-        <Text className="text-lg text-gray-700">Not logged in</Text>
-        <Pressable
-          className="mt-4 px-6 py-2 bg-blue-500 rounded-lg"
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "#f3f4f6",
+        }}
+      >
+        <Text variant="headlineSmall">Not logged in</Text>
+        <Button
+          mode="outlined"
           onPress={() => router.push("/(auth)/verify-email")}
         >
-          <Text className="text-white font-semibold">Go to Login</Text>
-        </Pressable>
+          <Text>Go to Login</Text>
+        </Button>
       </View>
     );
   }
 
   return (
-    <View className="flex-1 bg-gray-100 p-5">
+    <View style={{ flex: 1, backgroundColor: "#F3F4F6", padding: 20 }}>
       {/* Header */}
-      <Text className="text-3xl font-bold text-gray-800 mb-8 text-center">
+      <Text
+        style={{
+          fontSize: 24,
+          fontWeight: "bold",
+          color: "#1F2937",
+          marginBottom: 32,
+          textAlign: "center",
+        }}
+      >
         Profile
       </Text>
 
       {/* User Info Card */}
-      <View className="bg-white rounded-xl   p-3 mb-6">
-        <View className="flex-row items-center mb-4">
-          <Text className="text-lg font-semibold text-gray-700 w-24">
+      <View
+        style={{
+          backgroundColor: "#FFFFFF",
+          borderRadius: 12,
+          padding: 12,
+          marginBottom: 24,
+        }}
+      >
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            marginBottom: 16,
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 18,
+              fontWeight: "600",
+              color: "#4B5563",
+              width: 96,
+            }}
+          >
             Name:
           </Text>
-          <Text className="text-lg text-gray-900 flex-1">
+          <Text style={{ fontSize: 18, color: "#111827", flex: 1 }}>
             {userData?.name || "Not provided"}
           </Text>
         </View>
-        <View className="flex-row items-center mb-4">
-          <Text className="text-lg font-semibold text-gray-700 w-24">
+
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            marginBottom: 16,
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 18,
+              fontWeight: "600",
+              color: "#4B5563",
+              width: 96,
+            }}
+          >
             Email:
           </Text>
-          <Text className="text-lg text-gray-900 flex-1">
+          <Text style={{ fontSize: 18, color: "#111827", flex: 1 }}>
             {userData?.email}
           </Text>
         </View>
-        <View className="flex-row items-center">
-          <Text className="text-lg font-semibold text-gray-700 w-24">
+
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <Text
+            style={{
+              fontSize: 18,
+              fontWeight: "600",
+              color: "#4B5563",
+              width: 96,
+            }}
+          >
             Role:
           </Text>
-          <Text className="text-lg text-gray-900 flex-1">{userData?.role}</Text>
+          <Text style={{ fontSize: 18, color: "#111827", flex: 1 }}>
+            {userData?.role}
+          </Text>
         </View>
 
         <Divider style={{ marginVertical: 15 }} />
+
         {/* Logout Button */}
-        <Button
-          // className="bg-red-500 py-2 rounded-lg active:bg-red-600"
-          onPress={handleLogout}
-          // icon=""
-          mode="outlined"
-        >
+        <Button onPress={handleLogout} mode="outlined">
           Logout
         </Button>
       </View>

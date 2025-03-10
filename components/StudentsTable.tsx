@@ -1,6 +1,6 @@
 import * as React from "react";
-import { DataTable } from "react-native-paper";
-import { Text, View } from "./Themed";
+import { DataTable, Text } from "react-native-paper";
+import {  View } from "./Themed";
 import { FindStudentDto } from "@/services/students/dto/student.dto";
 
 const StudentsTable = () => {
@@ -50,7 +50,9 @@ const StudentsTable = () => {
 
   return (
     <View>
-      <Text className=" p-2  font-semibold text-lg">Student List</Text>
+      <Text style={{ padding: 10, paddingBottom: 0 }} variant="headlineSmall">
+        Student List
+      </Text>
       <DataTable>
         <DataTable.Header>
           <DataTable.Title>Name</DataTable.Title>

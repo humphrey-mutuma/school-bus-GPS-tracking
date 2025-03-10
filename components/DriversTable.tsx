@@ -1,6 +1,6 @@
 import * as React from "react";
-import { DataTable } from "react-native-paper";
-import { Text, View } from "./Themed";
+import { DataTable, Text } from "react-native-paper";
+import { View } from "./Themed";
 import { DriverResDto } from "@/services/drivers/dto/driver.dto";
 
 const DriversTable = () => {
@@ -30,8 +30,10 @@ const DriversTable = () => {
   ]);
 
   return (
-    <View className="mt-3 mb-10">
-      <Text className=" p-2  font-semibold text-lg">Drivers List</Text>
+    <View style={{ marginTop: 12, marginBottom: 30 }}>
+      <Text style={{ padding: 10, paddingBottom: 0 }} variant="headlineSmall">
+        Drivers List
+      </Text>
       <DataTable>
         <DataTable.Header>
           <DataTable.Title>Name</DataTable.Title>

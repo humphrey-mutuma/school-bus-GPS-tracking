@@ -1,5 +1,5 @@
 // app/admin.tsx
-import { View, Pressable, ScrollView } from "react-native";
+import { View, ScrollView } from "react-native";
 import { router, useRouter } from "expo-router";
 import { useState } from "react";
 import useAuthStore from "@/stores/auth-store";
@@ -18,56 +18,93 @@ export default function AdminScreen() {
 
   if (!userData) {
     return (
-      <View className="flex-1 justify-center items-center bg-gray-100">
-        <Text className="text-base  ">Not logged in</Text>
-        <Pressable
-          className="mt-4 px-6 py-2 bg-blue-500 rounded-lg"
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "#f3f4f6",
+        }}
+      >
+        <Text variant="headlineSmall">Not logged in</Text>
+        <Button
+          mode="outlined"
           onPress={() => router.push("/(auth)/verify-email")}
         >
-          <Text className="text-white font-semibold">Go to Login</Text>
-        </Pressable>
+          <Text>Go to Login</Text>
+        </Button>
       </View>
     );
   }
 
   return (
-    <View className="flex-1 bg-gray-100 p-1">
+    <View style={{ flex: 1, backgroundColor: "#F3F4F6", padding: 4 }}>
       {/* User Info Card */}
-      <View className="bg-white rounded-xl   p-2 mb-6">
-        <View className="flex- mb-4">
+      <View
+        style={{
+          backgroundColor: "white",
+          borderRadius: 12,
+          padding: 8,
+          marginBottom: 24,
+        }}
+      >
+        <View style={{ marginBottom: 16 }}>
           <View>
-            <Text className="text-xl font-semibold">Welcome Back</Text>
+            <Text style={{ fontSize: 20, fontWeight: "600" }}>
+              Welcome Back
+            </Text>
           </View>
-          {/*  */}
-          <View className="flex-row items-center">
-            <Text className="text-base font-semibold   mr-2">Name:</Text>
-            <Text className="  text-gray-600 flex-1">
+
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Text style={{ fontSize: 16, fontWeight: "600", marginRight: 8 }}>
+              Name:
+            </Text>
+            <Text style={{ color: "#4B5563", flex: 1 }}>
               {userData?.name || "Not provided"}
             </Text>
           </View>
-          <View className="flex-row items-center">
-            <Text className="text-base font-semibold   mr-2">Email:</Text>
-            <Text className="  text-gray-600 flex-1">{userData?.email}</Text>
+
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Text style={{ fontSize: 16, fontWeight: "600", marginRight: 8 }}>
+              Email:
+            </Text>
+            <Text style={{ color: "#4B5563", flex: 1 }}>{userData?.email}</Text>
           </View>
-          {/*  */}
-          <View className="flex-row items-center">
-            <Text className="text-base font-semibold   mr-2">Role:</Text>
-            <Text className="  text-gray-600 flex-1">{userData?.role}</Text>
+
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Text style={{ fontSize: 16, fontWeight: "600", marginRight: 8 }}>
+              Role:
+            </Text>
+            <Text style={{ color: "#4B5563", flex: 1 }}>{userData?.role}</Text>
           </View>
-          {/*  */}
-          <View className="flex-row items-center">
-            <Text className="text-base font-semibold   mr-2">School:</Text>
-            <Text className="  text-gray-600 flex-1">
+
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Text style={{ fontSize: 16, fontWeight: "600", marginRight: 8 }}>
+              School:
+            </Text>
+            <Text style={{ color: "#4B5563", flex: 1 }}>
               {userData?.school?.name}
             </Text>
           </View>
-          <View className="flex-row items-center">
-            <Text className="text-base font-semibold   mr-2">Address:</Text>
-            <Text className="  text-gray-600 flex-1">
+
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Text style={{ fontSize: 16, fontWeight: "600", marginRight: 8 }}>
+              Address:
+            </Text>
+            <Text style={{ color: "#4B5563", flex: 1 }}>
               {userData?.school?.address}
             </Text>
           </View>
-          <View className="flex flex-row items-baseline justify-evenly w-full mt-4">
+
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "baseline",
+              justifyContent: "space-evenly",
+              width: "100%",
+              marginTop: 16,
+            }}
+          >
             <Button
               icon="pencil"
               mode="contained"
@@ -86,7 +123,8 @@ export default function AdminScreen() {
           </View>
         </View>
       </View>
-      <ScrollView className="flex-1 pb-20">
+
+      <ScrollView style={{ flex: 1, paddingBottom: 60 }}>
         <StudentsTable />
         <DriversTable />
       </ScrollView>

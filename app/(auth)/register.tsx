@@ -1,16 +1,11 @@
 // app/(auth)/Register.js
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  ScrollView,
-} from "react-native";
+import { View, ScrollView } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { RegisterDto } from "@/services/auth/dto/auth.dto";
 import authService from "@/services/auth/auth.service";
 import { Toast } from "toastify-react-native";
+import { Button, Text, TextInput } from "react-native-paper";
 
 export default function Register() {
   const { email: paramsEmail } = useLocalSearchParams();
@@ -60,66 +55,65 @@ export default function Register() {
   };
 
   return (
-    <ScrollView className="flex-1 bg-gray-100 p-4">
-      <View className="justify-center items-center">
-        <Text className="text-2xl font-bold text-gray-800 mb-6 mt-4">
-          Create Account
-        </Text>
-
-        <View className="w-full max-w-sm">
+    <ScrollView style={{ flex: 1, backgroundColor: "#f3f4f6", padding: 16 }}>
+      <View style={{ justifyContent: "center", alignItems: "center" }}>
+        <View style={{ width: "100%", maxWidth: 320, gap: 15 }}>
+          <Text variant="headlineSmall">Create Account</Text>
           {/* Full Name */}
           <TextInput
-            className="w-full p-3 mb-4 bg-white border border-gray-300 rounded-sm text-gray-700"
-            placeholder="Full Name"
+            style={{}}
+            mode="outlined"
+            label="Full Name"
             value={fullName}
             onChangeText={setFullName}
           />
-          {/* email */}
+          {/* Email */}
           <TextInput
-            className="w-full outline-0 p-3 mb-4 bg-white border border-gray-300 rounded-sm text-gray-700"
-            placeholder="email"
+            style={{}}
+            mode="outlined"
+            label="email"
             value={email}
-            // onChangeText={setEmail}
             autoCapitalize="none"
             editable={false}
           />
           {/* Password */}
           <TextInput
-            className="w-full p-3 mb-4 bg-white border border-gray-300 rounded-sm text-gray-700"
-            placeholder="Password"
+            style={{}}
+            mode="outlined"
+            label="Password"
             value={password}
             onChangeText={setPassword}
             secureTextEntry
             autoCapitalize="none"
           />
-          <View className="my-1 outline-1"></View>
+          <View style={{ marginVertical: 4, borderWidth: 1 }}></View>
           {/* School Name Input */}
           <TextInput
-            className="w-full p-3 mb-4 bg-gray-50 border border-gray-300 rounded-sm text-gray-700"
-            placeholder="Enter school name"
+            style={{}}
+            mode="outlined"
+            label="Enter school name"
             value={schoolName}
             onChangeText={setSchoolName}
             autoCapitalize="words"
           />
           {/* Address Input */}
           <TextInput
-            className="w-full p-3 mb-4 bg-gray-50 border border-gray-300 rounded-sm text-gray-700"
-            placeholder="Enter school address"
+            style={{}}
+            mode="outlined"
+            label="Enter school address"
             value={schoolAddress}
             onChangeText={setSchoolAddress}
             autoCapitalize="words"
           />
           {/* Sign Up Button */}
-          <TouchableOpacity
+          <Button
             disabled={isLoading}
-            className="w-full p-3 bg-blue-500 rounded-sm mb-4"
+            style={{}}
             onPress={handleRegister}
-            activeOpacity={0.7}
+            mode={"outlined"}
           >
-            <Text className="text-white text-center font-semibold text-lg">
-              {isLoading ? "Saving..." : "  Sign Up"}
-            </Text>
-          </TouchableOpacity>
+            <Text>{isLoading ? "Saving..." : "  Sign Up"}</Text>
+          </Button>
         </View>
       </View>
     </ScrollView>

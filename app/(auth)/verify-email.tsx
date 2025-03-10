@@ -1,15 +1,10 @@
 // app/(auth)/VerifyEmail.js
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  ScrollView,
-} from "react-native";
+import { TouchableOpacity, ScrollView, View } from "react-native";
 import { useRouter } from "expo-router";
 import authService from "@/services/auth/auth.service";
 import { Toast } from "toastify-react-native";
+import { Text, TextInput, Button, RadioButton } from "react-native-paper";
 
 export default function VerifyEmail() {
   const [isLoading, setIsLoading] = useState(false);
@@ -29,7 +24,6 @@ export default function VerifyEmail() {
       // find user by email
       const userExits = await authService.findByEmail(email);
 
- 
       // user has pass, sign-in
       if (userExits.data?.hasPassword) {
         router.push({
@@ -59,7 +53,7 @@ export default function VerifyEmail() {
       }
       // no user and is not applying as an admin
       if (!userExits.data && role !== "ADMIN") {
-        Toast.error("You are not listed with any school!",);
+        Toast.error("You are not listed with any school!");
         return;
       }
     } catch (error) {
@@ -70,78 +64,106 @@ export default function VerifyEmail() {
   };
 
   return (
-    <ScrollView className="flex-1 bg-gray-100 p-4">
-      <View className="justify-center items-center">
-        <Text className="text-2xl font-bold text-gray-800 mb-6 mt-4">
-          Get Started with Bus Tracker
-        </Text>
-
-        <View className="w-full max-w-sm">
+    <ScrollView style={{ flex: 1, backgroundColor: "#f3f4f6", padding: 16 }}>
+      <View style={{ justifyContent: "center", alignItems: "center" }}>
+        <View style={{ width: "100%", maxWidth: 320, gap: 15 }}>
+          <Text variant="headlineSmall">Get Started with Bus Tracker</Text>
           {/* email */}
           <TextInput
-            className="w-full p-3 mb-4 bg-white border border-gray-300 rounded-lg text-gray-700"
-            placeholder="Email"
+            label="Email"
             value={email}
             onChangeText={setEmail}
             autoCapitalize="none"
+            mode="outlined"
           />
 
           {/* Role Selection with Radio Buttons */}
-          <Text className="text-gray-700 font-semibold mb-2">Select Role:</Text>
-          <View className="mb-4">
+          <Text
+            style={{ color: "#374151", fontWeight: "600", marginBottom: 8 }}
+          >
+            Select Role:
+          </Text>
+          <View style={{ marginBottom: 16 }}>
             {/* Parent Radio */}
             <TouchableOpacity
-              className="flex-row items-center mb-2"
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                marginBottom: 8,
+              }}
               onPress={() => setRole("PARENT")}
             >
               <View
-                className={`w-6 h-6 rounded-full border-2 border-blue-500 mr-2 ${
-                  role === "PARENT" ? "bg-blue-500" : "bg-white"
-                }`}
+                style={{
+                  width: 24,
+                  height: 24,
+                  borderRadius: 9999,
+                  borderWidth: 2,
+                  borderColor: "#3b82f6",
+                  marginRight: 8,
+                  backgroundColor: role === "PARENT" ? "#3b82f6" : "white",
+                }}
               />
-              <Text className="text-gray-700">Parent</Text>
+              <Text style={{ color: "#374151" }}>Parent</Text>
             </TouchableOpacity>
 
             {/* Driver Radio */}
+
             <TouchableOpacity
-              className="flex-row items-center mb-2"
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                marginBottom: 8,
+              }}
               onPress={() => setRole("DRIVER")}
             >
               <View
-                className={`w-6 h-6 rounded-full border-2 border-blue-500 mr-2 ${
-                  role === "DRIVER" ? "bg-blue-500" : "bg-white"
-                }`}
+                style={{
+                  width: 24,
+                  height: 24,
+                  borderRadius: 9999,
+                  borderWidth: 2,
+                  borderColor: "#3b82f6",
+                  marginRight: 8,
+                  backgroundColor: role === "DRIVER" ? "#3b82f6" : "white",
+                }}
               />
-              <Text className="text-gray-700">Driver</Text>
+              <Text style={{ color: "#374151" }}>Driver</Text>
             </TouchableOpacity>
 
             {/* Admin Radio */}
             <TouchableOpacity
-              className="flex-row items-center mb-2"
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                marginBottom: 8,
+              }}
               onPress={() => setRole("ADMIN")}
             >
               <View
-                className={`w-6 h-6 rounded-full border-2 border-blue-500 mr-2 ${
-                  role === "ADMIN" ? "bg-blue-500" : "bg-white"
-                }`}
+                style={{
+                  width: 24,
+                  height: 24,
+                  borderRadius: 9999,
+                  borderWidth: 2,
+                  borderColor: "#3b82f6",
+                  marginRight: 8,
+                  backgroundColor: role === "ADMIN" ? "#3b82f6" : "white",
+                }}
               />
-              <Text className="text-gray-700">Admin (Principal)</Text>
+              <Text style={{ color: "#374151" }}>Admin (Principal)</Text>
             </TouchableOpacity>
           </View>
 
-          {/* Conditional Fields Based on Role */}
-
           {/* Sign Up Button */}
-          <TouchableOpacity
+          <Button
             disabled={isLoading}
-            className="w-full p-3 bg-blue-500 rounded-lg mb-4"
+            style={{}}
             onPress={handleVerifyEmail}
-            activeOpacity={0.7}
+            mode="outlined"
           >
-            <Text className="text-white text-center font-semibold text-lg">
-              {isLoading ? "Verifying..." : "Join"}
-            </Text>
-          </TouchableOpacity>
+            <Text>{isLoading ? "Verifying..." : "Join"}</Text>
+          </Button>
         </View>
       </View>
     </ScrollView>

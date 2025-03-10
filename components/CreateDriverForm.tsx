@@ -1,16 +1,9 @@
 // app/(admin)/create-driver.tsx
-import {
-  TextInput,
-  View,
-  Text,
-  ScrollView,
-  Pressable,
-  Modal,
-  Alert,
-} from "react-native";
+import { View, ScrollView, Pressable, Modal, Alert } from "react-native";
 import { useState } from "react";
 import driversService from "@/services/drivers/drivers.service";
 import { Toast } from "toastify-react-native";
+import { Button, Text, TextInput } from "react-native-paper";
 
 export default function CreateDriverScreen({ visible, setVisible }: any) {
   const [email, setEmail] = useState("");
@@ -62,76 +55,89 @@ export default function CreateDriverScreen({ visible, setVisible }: any) {
     >
       {/* Backdrop */}
       <Pressable
-        className="flex-1 bg-black/50" // Semi-transparent black backdrop
+        style={{ flex: 1, backgroundColor: "rgba(0,0,0,0.5)" }} // Semi-transparent black backdrop
         onPress={handleClose} // Close modal when backdrop is tapped
       >
         {/* Prevent backdrop press from closing when tapping modal content */}
-        <Pressable className="flex-1" onPress={(e) => e.stopPropagation()}>
+        <Pressable style={{ flex: 1 }} onPress={(e) => e.stopPropagation()}>
           {/* Modal Content */}
-          <View className="absolute bottom-0 w-full h-5/6 bg-white rounded-t-3xl shadow-lg">
+          <View
+            style={{
+              position: "absolute",
+              bottom: 0,
+              width: "100%",
+              height: "83%",
+              backgroundColor: "#FFFFFF",
+              borderTopLeftRadius: 24,
+              borderTopRightRadius: 24,
+              shadowColor: "#000",
+              shadowOffset: { width: 0, height: -3 },
+              shadowOpacity: 0.1,
+              shadowRadius: 4,
+            }}
+          >
             <ScrollView contentContainerStyle={{ padding: 16 }}>
-              <View className="mb-2 bg-gray-100 ">
-                <View className="bg-white rounded-sm  p-2 mb-6">
-                  <Text className="text-2xl font-[500] text-gray-800 mb-2 ">
+              <View style={{ marginBottom: 8, backgroundColor: "#F3F4F6" }}>
+                <View
+                  style={{
+                    backgroundColor: "#FFFFFF",
+                    borderRadius: 4,
+                    padding: 8,
+                    gap: 15,
+                  }}
+                >
+                  <Text variant="headlineSmall" style={{}}>
                     Create a Driver
                   </Text>
                   {/* Email Input */}
                   <TextInput
-                    className="w-full p-3 text-base  bg-gray-50 border border-gray-300 rounded-lg text-gray-700"
-                    placeholder="Enter driver email"
+                    mode="outlined"
+                    label="Enter driver email"
                     value={email}
                     onChangeText={setEmail}
                     autoCapitalize="none"
                     keyboardType="email-address"
                   />
-                  <Text className="text-xs font-light italic p-1 mb-4 text-gray-700">
+                  <Text variant="labelSmall">
                     This email will be used by drivers to sign in and give their
                     GPS location while in transit
                   </Text>
                   {/* Name Input  */}
                   <TextInput
-                    className="w-full p-3 text-base mb-4 bg-gray-50 border border-gray-300 rounded-lg text-gray-700"
-                    placeholder="Enter driver name  "
+                    mode="outlined"
+                    label="Enter driver name  "
                     value={name}
                     onChangeText={setName}
                     autoCapitalize="words"
                   />
                   {/* Phone Number Input */}
                   <TextInput
-                    className="w-full p-3 text-base mb-4 bg-gray-50 border border-gray-300 rounded-lg text-gray-700"
-                    placeholder="Enter phone number"
+                    mode="outlined"
+                    label="Enter phone number"
                     value={phoneNumber}
                     onChangeText={setPhoneNumber}
                     keyboardType="phone-pad"
                   />
                   {/* Car Plate Number Input */}
                   <TextInput
-                    className="w-full p-3 text-base mb-4 bg-gray-50 border border-gray-300 rounded-lg text-gray-700"
-                    placeholder="Enter car  number plate"
+                    mode="outlined"
+                    label="Enter car  number plate"
                     value={carNumberPlate}
                     onChangeText={setCarNumberPlate}
                     autoCapitalize="characters"
                   />
                   {/* Submit Button */}
-                  <Pressable
-                    className={`py-3 rounded-lg ${
-                      loading ? "bg-blue-300" : "bg-blue-500"
-                    } active:bg-blue-600`}
+                  <Button
+                    mode="contained"
                     onPress={handleCreateDriver}
                     disabled={loading}
                   >
-                    <Text className="text-white text-center font-semibold text-lg">
-                      {loading ? "Creating..." : "Create Driver"}
-                    </Text>
-                  </Pressable>
-                  <Pressable
-                    className="bg-red-300 py-3 rounded-lg  my-3"
-                    onPress={handleClose}
-                  >
-                    <Text className="text-white text-center font-semibold">
-                      Cancel
-                    </Text>
-                  </Pressable>
+                    <Text>{loading ? "Creating..." : "Create Driver"}</Text>
+                  </Button>
+                  {/*  */}
+                  <Button mode="outlined" onPress={handleClose}>
+                    <Text style={{ color: "red" }}>Cancel</Text>
+                  </Button>
                 </View>
               </View>
             </ScrollView>

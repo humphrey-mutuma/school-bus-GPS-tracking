@@ -1,18 +1,13 @@
 // app/(auth)/signIn.js
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  ScrollView,
-} from "react-native";
+import { View, TouchableOpacity, ScrollView } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import authService from "@/services/auth/auth.service";
 import { Roles } from "@/enums";
 import { Toast } from "toastify-react-native";
 import useAuthStore from "@/stores/auth-store";
 import { SessionUser } from "@/types";
+import { Button, TextInput, Text } from "react-native-paper";
 
 export default function SignIn() {
   const { email: paramsEmail } = useLocalSearchParams();
@@ -60,45 +55,40 @@ export default function SignIn() {
   };
 
   return (
-    <ScrollView className="flex-1 bg-gray-100 p-4">
-      <View className="justify-center items-center">
-        <Text className="text-2xl font-bold text-gray-800 mb-6 mt-4">
-          Get Started with Bus Tracker
-        </Text>
-
-        <View className="w-full max-w-sm">
+    <ScrollView style={{ flex: 1, backgroundColor: "#f3f4f6", padding: 16 }}>
+      <View style={{ justifyContent: "center", alignItems: "center" }}>
+        <View style={{ width: "100%", maxWidth: 320, gap: 15 }}>
+          <Text variant="headlineSmall">Get Started with Bus Tracker</Text>
           {/* email */}
           <TextInput
-            className="w-full outline-0  p-3 mb-4 bg-white border border-gray-300 rounded-lg text-gray-700"
-            placeholder="Email"
+            style={{}}
+            label="Email"
             value={email}
             // onChangeText={setEmail}
             autoCapitalize="none"
             editable={false}
+            mode="outlined"
           />
 
           <TextInput
-            className="w-full p-3 mb-4 bg-white border border-gray-300 rounded-lg text-gray-700"
-            placeholder="Password"
+            style={{}}
+            label="Password"
             value={password}
             onChangeText={setPassword}
             autoCapitalize="none"
             secureTextEntry
+            mode="outlined"
           />
 
-          {/* Conditional Fields Based on Role */}
-
           {/* Sign Up Button */}
-          <TouchableOpacity
+          <Button
             disabled={isLoading}
-            className="w-full p-3 bg-blue-500 rounded-lg mb-4"
+            style={{}}
             onPress={handleSignIn}
-            activeOpacity={0.7}
+            mode={"outlined"}
           >
-            <Text className="text-white text-center font-semibold text-lg">
-              {isLoading ? "Loading..." : " Sign In"}
-            </Text>
-          </TouchableOpacity>
+            <Text>{isLoading ? "Loading..." : " Sign In"}</Text>
+          </Button>
         </View>
       </View>
     </ScrollView>
