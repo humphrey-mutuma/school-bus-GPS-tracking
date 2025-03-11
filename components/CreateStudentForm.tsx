@@ -15,11 +15,11 @@ export default function CreateStudentForm({ visible, setVisible }: any) {
   const [parentEmail, setParentEmail] = useState("");
   const [name, setName] = useState("");
   const [parentName, setParentName] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
+  // const [phoneNumber, setPhoneNumber] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleCreateStudent = async () => {
-    if (!name || !parentEmail) {
+    if (!name || !parentName || !parentEmail) {
       Toast.error("Please fill in all fields");
       return;
     }
@@ -36,7 +36,7 @@ export default function CreateStudentForm({ visible, setVisible }: any) {
         Toast.success(response.message);
         setName("");
         setParentEmail("");
-        setPhoneNumber("");
+        // setPhoneNumber("");
         setVisible(false);
         fetchStudents();
       }

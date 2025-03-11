@@ -6,7 +6,7 @@ import { CreateStudentDto, FindStudentDto } from "./dto/student.dto";
 class StudentsService {
   // Helper method to create full URLs
   private baseUrl(endpoint: string): string {
-    return `Students${endpoint}`;
+    return `students${endpoint}`;
   }
 
   // authenticate user ***************************************************
