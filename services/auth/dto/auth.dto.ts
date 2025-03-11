@@ -1,5 +1,4 @@
-import { Roles } from "@/enums";
-
+ 
 export interface LoginDto {
   email: string;
   password: string;
@@ -26,7 +25,7 @@ export interface LoginResDto {
   id: string;
   name: string;
   email: string;
-  role: Roles;
+  role: "ADMIN" | "PARENT" | "STUDENT" | "DRIVER";
 
   school: { id: string; name: string; address: string } | null;
 }

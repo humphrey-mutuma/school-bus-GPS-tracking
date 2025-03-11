@@ -151,7 +151,7 @@ export default function VerifyEmail() {
                   backgroundColor: role === "ADMIN" ? "#3b82f6" : "white",
                 }}
               />
-              <Text style={{ color: "#374151" }}>Admin (Principal)</Text>
+              <Text style={{ color: "#374151" }}>Principal (Admin)</Text>
             </TouchableOpacity>
           </View>
 

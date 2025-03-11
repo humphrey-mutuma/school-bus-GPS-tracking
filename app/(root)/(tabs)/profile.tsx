@@ -1,30 +1,14 @@
 // app/profile.tsx
 import { View } from "react-native";
 import { router } from "expo-router";
-import { useEffect, useState } from "react";
-import useAuthStore from "@/stores/auth-store";
-import { Roles } from "@/enums";
-import schoolsService from "@/services/schools/schools.service";
+ import useAuthStore from "@/stores/auth-store";
 import { Button, Divider, Text } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 export default function ProfileScreen() {
   const { userData, logOut } = useAuthStore();
-  const [schoolName, setSchoolName] = useState<string | null>(null);
-
+ 
   // Fetch school name if user is an admin
-  useEffect(() => {
-    if (userData?.role === Roles.ADMIN) {
-      const fetchSchool = async () => {
-        try {
-          const response = await schoolsService.findSchool(userData.id);
-          setSchoolName(response.data.name);
-        } catch (error) {
-          console.error("Error fetching school:", error);
-        }
-      };
-      fetchSchool();
-    }
-  }, [userData]);
+ 
 
   const handleLogout = () => {
     logOut();

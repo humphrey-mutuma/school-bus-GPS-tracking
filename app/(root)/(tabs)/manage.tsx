@@ -110,32 +110,33 @@ export default function AdminScreen() {
                 {userData?.school?.address}
               </Text>
             </View>
-
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "baseline",
-                justifyContent: "space-evenly",
-                width: "100%",
-                marginTop: 16,
-              }}
-            >
-              <Button
-                icon="pencil"
-                mode="contained"
-                onPress={() => setCreateStudent(true)}
+            {userData.role.toString() === "ADMIN" && (
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "baseline",
+                  justifyContent: "space-evenly",
+                  width: "100%",
+                  marginTop: 16,
+                }}
               >
-                Create Student
-              </Button>
-              <Button
-                icon="pencil"
-                mode="outlined"
-                onPress={() => setCreateDriver(true)}
-                style={{ marginLeft: 5 }}
-              >
-                Create Driver
-              </Button>
-            </View>
+                <Button
+                  icon="pencil"
+                  mode="contained"
+                  onPress={() => setCreateStudent(true)}
+                >
+                  Create Student
+                </Button>
+                <Button
+                  icon="pencil"
+                  mode="outlined"
+                  onPress={() => setCreateDriver(true)}
+                  style={{ marginLeft: 5 }}
+                >
+                  Create Driver
+                </Button>
+              </View>
+            )}
           </View>
         </View>
 

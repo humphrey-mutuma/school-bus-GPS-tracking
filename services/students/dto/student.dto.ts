@@ -7,6 +7,6 @@ export interface CreateStudentDto {
 export interface FindStudentDto {
   id: string;
   name: string;
-  parentEmail?: string;
-  parentName?: string;
+  parentEmail: string;
+  parentName: string;
 }

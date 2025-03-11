@@ -2,14 +2,16 @@ import * as React from "react";
 import { DataTable, Text } from "react-native-paper";
 import { View } from "./Themed";
 import useUserStore from "@/stores/user-store";
+import useAuthStore from "@/stores/auth-store";
 
 const DriversTable = () => {
   const { drivers } = useUserStore();
+  const { userData } = useAuthStore();
 
   return (
     <View style={{ marginTop: 12, marginBottom: 30 }}>
       <Text style={{ padding: 10, paddingBottom: 0 }} variant="headlineSmall">
-        Drivers List
+        Schools' drivers
       </Text>
       <DataTable>
         <DataTable.Header>

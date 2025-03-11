@@ -60,7 +60,7 @@ const useAuthStore = create<AuthState>()(
           return;
         }
 
-        set({ isLoading: true });
+        // set({ isLoading: true });
 
         try {
           set({
@@ -68,10 +68,10 @@ const useAuthStore = create<AuthState>()(
             userData: null,
             refToken: null,
           });
-          localStorage.clear();
+          // localStorage.clear();
           alert("Successfully Signed Out!");
         } catch (error) {
-          alert(`error`);
+          // alert(`error`);
         } finally {
           // set({ isLoading: false });
         }

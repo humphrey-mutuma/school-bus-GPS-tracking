@@ -11,7 +11,7 @@ export function handleAxiosError(error: any): never {
     throw new Error(error.response?.data?.message);
   } else {
     // The error is not an AxiosError
-    alert(error.response?.data?.message);
+    // alert(error.response?.data?.message);
     console.error("Unexpected error:", error);
     throw new Error("An unexpected error occurred. Please try again.");
   }

@@ -2,14 +2,16 @@ import * as React from "react";
 import { DataTable, Text } from "react-native-paper";
 import { View } from "./Themed";
 import useUserStore from "@/stores/user-store";
-
+import useAuthStore from "@/stores/auth-store";
+ 
 const StudentsTable = () => {
   const { students } = useUserStore();
+  const { userData } = useAuthStore();
 
   return (
     <View>
       <Text style={{ padding: 10, paddingBottom: 0 }} variant="headlineSmall">
-        Students List
+        {userData?.role == "PARENT" ? "Your Student" : " Students List"}
       </Text>
       <DataTable>
         <DataTable.Header>
