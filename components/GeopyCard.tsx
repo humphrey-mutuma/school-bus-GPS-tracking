@@ -60,7 +60,7 @@ const OSMMap = () => {
     <View style={styles.container}>
       {/* Floating Text */}
       <View style={styles.floatingText}>
-        {!userData?.name ? (
+        {userData?.name ? (
           <Text style={styles.text}>Hello {userData?.name}</Text>
         ) : (
           <Text style={styles.text}>Login to tract your child</Text>
