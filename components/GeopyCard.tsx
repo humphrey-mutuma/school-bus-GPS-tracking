@@ -1,81 +1,98 @@
-// // Geoapify API key (replace with your own)
-// import React, { useEffect, useState } from "react";
-// import { View, ActivityIndicator, StyleSheet } from "react-native";
-// import MapView, { Polyline, Marker } from "react-native-maps";
+import React, { useEffect, useState } from "react";
+import { View, Text, ActivityIndicator, StyleSheet } from "react-native";
+import { WebView } from "react-native-webview";
+import * as Location from "expo-location";
+import useAuthStore from "@/stores/auth-store";
 
-// const API_KEY = "f7081337223645b8b54ae4055dbfdc35";
-// const startPoint = { latitude: -1.2805069, longitude: 36.816795 };
-// const endPoint = { latitude: -1.268379, longitude: 36.8204315 };
+const OSMMap = () => {
+  const [location, setLocation] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const { userData } = useAuthStore();
+  useEffect(() => {
+    const getLocation = async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        alert("Permission to access location was denied");
+        return;
+      }
 
-// const BusRouteMap = () => {
-//   const [routeCoords, setRouteCoords] = useState([]);
-//   const [loading, setLoading] = useState(true);
+      let loc = await Location.getCurrentPositionAsync({});
+      setLocation(loc.coords);
+      setLoading(false);
+    };
 
-//   useEffect(() => {
-//     const fetchRoute = async () => {
-//       try {
-//         const response = await fetch(
-//           `https://api.geoapify.com/v1/routing?waypoints=${startPoint.latitude},${startPoint.longitude}|${endPoint.latitude},${endPoint.longitude}&mode=drive&apiKey=${API_KEY}`
-//         );
-//         const data = await response.json();
+    getLocation();
+  }, []);
 
-//         if (data && data.features.length > 0) {
-//           // Extract route coordinates
-//           const coordinates = data.features[0].geometry.coordinates.map(
-//             ([lon, lat]) => ({
-//               latitude: lat,
-//               longitude: lon,
-//             })
-//           );
-//           setRouteCoords(coordinates);
-//         }
-//       } catch (error) {
-//         console.error("Error fetching route:", error);
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
+  if (loading) {
+    return <ActivityIndicator size="large" color="blue" />;
+  }
 
-//     fetchRoute();
-//   }, []);
+  const { latitude, longitude } = location;
+  const mapHTML = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+      <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+      <style>
+        #map { height: 100vh; width: 100vw; }
+      </style>
+    </head>
+    <body>
+      <div id="map"></div>
+      <script>
+        var map = L.map('map').setView([${latitude}, ${longitude}], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
 
-//   return (
-//     <View style={styles.container}>
-//       {loading ? (
-//         <ActivityIndicator size="large" color="#007AFF" />
-//       ) : (
-//         <MapView
-//           style={styles.map}
-//           initialRegion={{
-//             latitude: startPoint.latitude,
-//             longitude: startPoint.longitude,
-//             latitudeDelta: 0.01,
-//             longitudeDelta: 0.01,
-//           }}
-//         >
-//           {/* Markers for Start & End Points */}
-//           <Marker coordinate={startPoint} title="Start" />
-//           <Marker coordinate={endPoint} title="End" />
+        L.marker([${latitude}, ${longitude}]).addTo(map)
+          .bindPopup("School Bus")
+          .openPopup();
+      </script>
+    </body>
+    </html>
+  `;
 
-//           {/* Draw Route */}
-//           <Polyline
-//             coordinates={routeCoords}
-//             strokeWidth={4}
-//             strokeColor="blue"
-//           />
-//         </MapView>
-//       )}
-//     </View>
-//   );
-// };
+  return (
+    <View style={styles.container}>
+      {/* Floating Text */}
+      <View style={styles.floatingText}>
+        {!userData?.name ? (
+          <Text style={styles.text}>Hello {userData?.name}</Text>
+        ) : (
+          <Text style={styles.text}>Login to tract your child</Text>
+        )}
+      </View>
 
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//   },
-//   map: {
-//     flex: 1,
-//   },
-// });
+      {/* WebView for Map */}
+      <WebView
+        originWhitelist={["*"]}
+        source={{ html: mapHTML }}
+        javaScriptEnabled={true}
+      />
+    </View>
+  );
+};
 
-// export default BusRouteMap;
+const styles = StyleSheet.create({
+  container: { flex: 1, width: "100%", height: "100%" },
+  floatingText: {
+    position: "absolute",
+    top: 20,
+    right: 20,
+    backgroundColor: "rgba(0, 0, 0, 0.7)",
+    padding: 10,
+    borderRadius: 8,
+    zIndex: 1, // Ensures it appears above the map
+  },
+  text: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+});
+
+export default OSMMap;
