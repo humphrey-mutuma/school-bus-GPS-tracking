@@ -1,9 +1,8 @@
 import useAuthStore from "@/stores/auth-store";
 import axios from "axios";
 
-const APIS_BASE_URL = "https://test-app-eu4v.onrender.com/api/";
-// const APIS_BASE_URL = "http://192.168.89.216:5000/api/";
-export const axiosInstanceInsecure = axios.create({
+const APIS_BASE_URL = process.env.EXPO_PUBLIC_SERVER_URI
+ export const axiosInstanceInsecure = axios.create({
   baseURL: APIS_BASE_URL,
 });
 // Axios instance with interceptors
